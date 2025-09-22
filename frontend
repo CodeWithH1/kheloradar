@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechKhel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4c8de7;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #000080;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: white;
+            margin: 2rem auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Tab System */
+        .tab-container {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .tab-buttons {
+            display: flex;
+            overflow-x: auto;
+            padding: 1rem;
+            gap: 1rem;
+        }
+
+        .tab-button {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+            color: white;
+            border-color: #3c7ef1;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #4c8de7, #1e88e5 );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+           background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .upcoming-events {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .event-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            border-left: 4px solid #1e88e5;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .event-date {
+            color: #1e88e5;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        /* Competition Cards */
+        .competition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .competition-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .competition-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .eligibility-list {
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .eligibility-list li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .eligibility-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /*Drop down */
+        .sports-dropdown {
+  position: relative;
+  display: inline-block;
+  float: right; /* Top-right */
+  margin-right: 20px;
+}
+
+.dropbtn {
+  background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  z-index: 1000;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 10px 14px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.sports-dropdown:hover .dropdown-content {
+  display: block;
+}
+
+
+        /* Mentor Profiles */
+        .mentor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .mentor-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .mentor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .mentor-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .rating {
+            color: #ffc107;
+            margin: 0.5rem 0;
+        }
+
+        /* Streak Tracker */
+        .streak-container {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .streak-display {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .streak-number {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #1e88e5;
+        }
+
+        .points-display {
+            background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        /* Charity Section */
+        .donation-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        /* Contact Float Button */
+        .contact-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #42a5f5, #1e88e5,#1753c9);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-float:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #764ba2;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #555;
+            padding-top: 1rem;
+            text-align: center;
+            color: #999;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: black;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .tab-buttons {
+                flex-wrap: wrap;
+            }
+            
+            .dashboard-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="#" class="logo">🏆 TechKhel</a>
+    <div class="sports-dropdown">
+  <button class="dropbtn">Sports Category</button>
+  <div class="dropdown-content">
+    <a href="#" onclick="loadSports('Athletics')">Athletics</a>
+    <a href="#" onclick="loadSports('Badminton')">Badminton</a>
+    <a href="#" onclick="loadSports('Basketball')">Basketball</a>
+    <a href="#" onclick="loadSports('Cricket')">Cricket</a>
+    <a href="#" onclick="loadSports('Football')">Football</a>
+    <a href="#" onclick="loadSports('Gymnastics')">Gymnastics</a>
+    <a href="#" onclick="loadSports('Hockey')">Hockey</a>
+    <a href="#" onclick="loadSports('Marathon')">Marathon</a>
+    <a href="#" onclick="loadSports('Swimming')">Swimming</a>
+  </div>
+</div>
+
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <!-- Tab Navigation -->
+            <div class="tab-container">
+                <div class="tab-buttons">
+                    <div class="tab-button active" data-tab="dashboard">Home</div>
+                    <div class="tab-button" data-tab="local">Local Sports</div>
+                    <div class="tab-button" data-tab="district">District</div>
+                    <div class="tab-button" data-tab="state">State</div>
+                    <div class="tab-button" data-tab="khelo-india"> Khelo India</div>
+                    <div class="tab-button" data-tab="national">National</div>
+                    <div class="tab-button" data-tab="international">International</div>
+                    <div class="tab-button" data-tab="mentors">Mentors</div>
+                    <div class="tab-button" data-tab="tracker">My Progress</div>
+                    <div class="tab-button" data-tab="charity">Support Athletes</div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div class="tab-content active" id="dashboard">
+                <div class="dashboard">
+                    <div class="dashboard-header">
+                        <h1>Welcome to TechKhel!</h1>
+                        <p>Your gateway to sports competitions across India and beyond</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">1,250+</div>
+                            <div>Active Competitions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">500+</div>
+                            <div>Sports Mentors</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">₹50L+</div>
+                            <div>Funds Raised</div>
+                        </div>
+                        
+                    </div>
+
+                    <div class="upcoming-events">
+                        <h2><picture>
+  <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.webp" type="image/webp">
+  <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f525/512.gif" alt="🔥" width="32" height="32">
+</picture> Upcoming Events</h2>
+                        <div class="event-item">
+                            <div class="event-date">October 1, 2025</div>
+                            <div class="event-title">Inter-District Basketball Championship</div>
+                            <p>Registration deadline: September 22, 2025</p>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">October 10, 2025</div>
+                            <div class="event-title">State Level Swimming Competition</div>
+                            <p>Age group: 16-25 years</p>
+                        </div>
+                        <div class="event-item">
+                            <div class="event-date">October 25, 2025</div>
+                            <div class="event-title">Khelo India Youth Games - Athletics</div>
+                            <p>National level competition</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Local Sports Tab -->
+            <div class="tab-content" id="local">
+                <h2>Local Sports Competitions</h2>
+                <div class="competition-grid">
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏃</div>
+                            <h3>Community Marathon</h3>
+                        </div>
+                        <p><strong>Date:</strong> October 15, 2025</p>
+                        <p><strong>Venue:</strong> Central Park, Delhi</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>Age: 16+ years</li>
+                            <li>Medical certificate required</li>
+                            <li>Local resident preferred</li>
+                        </ul>
+                        <p><strong>Registration Fee:</strong> Free</p>
+                        <button class="btn">Register Now</button>
+                    </div>
+
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏸</div>
+                            <h3>Badminton Tournament</h3>
+                        </div>
+                        <p><strong>Date:</strong> November 2, 2025</p>
+                        <p><strong>Venue:</strong> Sports Complex, NSUT</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>Age: 15-25 years</li>
+                            <li>Valid College student id (Open to all colleges)</li>
+                            <li>Medical fitness certificate</li>
+                        </ul>
+                        <p><strong>Registration Fee:</strong> ₹500*(For non NSUTians)</p>
+                        <button class="btn">Register Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- District Tab -->
+            <div class="tab-content" id="district">
+                <h2> District Level Competitions</h2>
+                <div class="competition-grid">
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">⚽</div>
+                            <h3>District Football League</h3>
+                        </div>
+                        <p><strong>Date:</strong> November 1-15 , 2025</p>
+                        <p><strong>Venue:</strong> Multiple venues across district</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>Age: Under 21 years</li>
+                            <li>District resident certificate</li>
+                            <li>Team registration required</li>
+                        </ul>
+                        <p><strong>Registration Fee:</strong> ₹200 per team</p>
+                        <button class="btn">Register Team</button>
+                    </div>
+
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏊</div>
+                            <h3>Swimming Championship</h3>
+                        </div>
+                        <p><strong>Date:</strong> November 5, 2025</p>
+                        <p><strong>Venue:</strong> District Aquatic Center</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>Age: 14-25 years</li>
+                            <li>Swimming proficiency certificate</li>
+                            <li>District sports association member</li>
+                        </ul>
+                        <p><strong>Registration Fee:</strong> ₹200</p>
+                        <button class="btn">Register Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- State Tab -->
+            <div class="tab-content" id="state">
+                <h2> State Level Championships</h2>
+                <div class="competition-grid">
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏏</div>
+                            <h3>State Cricket Championship</h3>
+                        </div>
+                        <p><strong>Date:</strong> October 15 - November 15, 2025</p>
+                        <p><strong>Venue:</strong> Various stadiums across state</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>Age: Under 23 years</li>
+                            <li>State domicile certificate</li>
+                            <li>District level participation</li>
+                            <li>BCCI registration</li>
+                        </ul>
+                        <p><strong>Registration Fee:</strong> ₹500 per team</p>
+                        <button class="btn">Apply Now</button>
+                    </div>
+
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🤸</div>
+                            <h3>Gymnastics State Meet</h3>
+                        </div>
+                        <p><strong>Date:</strong> December 2, 2025</p>
+                        <p><strong>Venue:</strong> State Sports Complex</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>Age: 12-20 years</li>
+                            <li>Gymnastics federation member</li>
+                            <li>Medical fitness certificate</li>
+                        </ul>
+                        <p><strong>Registration Fee:</strong> ₹300</p>
+                        <button class="btn">Register Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Khelo India Tab -->
+            <div class="tab-content" id="khelo-india">
+                <h2> Khelo India Programs</h2>
+                <div class="competition-grid">
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏃‍♂️</div>
+                            <h3>Khelo India Youth Games</h3>
+                        </div>
+                        <p><strong>Date:</strong> November 1-15, 2025</p>
+                        <p><strong>Venue:</strong> Multiple cities across India</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>Age: Under 17 & Under 21 categories</li>
+                            <li>State level qualification required</li>
+                            <li>Medical fitness certificate</li>
+                            <li>Aadhar card mandatory</li>
+                        </ul>
+                        <p><strong>Registration:</strong> Through state associations</p>
+                        <button class="btn">Learn More</button>
+                    </div>
+
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏀</div>
+                            <h3>Khelo India University Games</h3>
+                        </div>
+                        <p><strong>Date:</strong> December 5-20, 2025</p>
+                        <p><strong>Venue:</strong> Host University</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>University student (17-25 years)</li>
+                            <li>Minimum 75% attendance</li>
+                            <li>University sports team member</li>
+                        </ul>
+                        <p><strong>Registration:</strong> Through university</p>
+                        <button class="btn">Apply Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- National Tab -->
+            <div class="tab-content" id="national">
+                <h2> National Championships</h2>
+                <div class="competition-grid">
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🎾</div>
+                            <h3>National Tennis Championship</h3>
+                        </div>
+                        <p><strong>Date:</strong> October 29, 2025</p>
+                        <p><strong>Venue:</strong> R.K. Khanna Tennis Complex, Delhi</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>AITA ranking required</li>
+                            <li>State level champion</li>
+                            <li>Age categories: Junior, Senior</li>
+                        </ul>
+                        <p><strong>Prize Money:</strong> ₹50,00,000</p>
+                        <button class="btn">View Details</button>
+                    </div>
+
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏋️</div>
+                            <h3>National Weightlifting Championship</h3>
+                        </div>
+                        <p><strong>Date:</strong> December 5-15, 2025</p>
+                        <p><strong>Venue:</strong> NIS Patiala</p>
+                        <h4>Eligibility:</h4>
+                        <ul class="eligibility-list">
+                            <li>IWF qualification standards</li>
+                            <li>Anti-doping clearance</li>
+                            <li>State association member</li>
+                        </ul>
+                        <p><strong>Prize Money:</strong> ₹25,00,000</p>
+                        <button class="btn">Register</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- International Tab -->
+            <div class="tab-content" id="international">
+                <h2> International Competitions</h2>
+                <div class="competition-grid">
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🥇</div>
+                            <h3>Paris Olympics 2025</h3>
+                        </div>
+                        <p><strong>Date:</strong> October 26 - December 11, 2025</p>
+                        <p><strong>Venue:</strong> Paris, France</p>
+                        <h4>Qualification Criteria:</h4>
+                        <ul class="eligibility-list">
+                            <li>IOC qualification standards</li>
+                            <li>World ranking eligibility</li>
+                            <li>National team selection</li>
+                            <li>Anti-doping compliance</li>
+                        </ul>
+                        <p><strong>Selection:</strong> Through IOA</p>
+                        <button class="btn">Qualification Info</button>
+                    </div>
+
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">♿</div>
+                            <h3>Paralympics 2025</h3>
+                        </div>
+                        <p><strong>Date:</strong> December 8 - December 28, 2025</p>
+                        <p><strong>Venue:</strong> Paris, France</p>
+                        <h4>Qualification Criteria:</h4>
+                        <ul class="eligibility-list">
+                            <li>IPC classification required</li>
+                            <li>Minimum eligibility standards</li>
+                            <li>Paralympic Committee selection</li>
+                        </ul>
+                        <p><strong>Selection:</strong> Through PCI</p>
+                        <button class="btn">Learn More</button>
+                    </div>
+
+                    <div class="competition-card">
+                        <div class="card-header">
+                            <div class="card-icon">🏆</div>
+                            <h3>Commonwealth Games 2026</h3>
+                        </div>
+                        <p><strong>Date:</strong> March 17-29, 2026</p>
+                        <p><strong>Venue:</strong> Victoria, Australia</p>
+                        <h4>Preparation Timeline:</h4>
+                        <ul class="eligibility-list">
+                            <li>National trials in 2025</li>
+                            <li>Commonwealth ranking standards</li>
+                            <li>Team India selection process</li>
+                        </ul>
+                        <p><strong>Early Registration:</strong> Now Open</p>
+                        <button class="btn">Prepare Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mentors Tab -->
+            <div class="tab-content" id="mentors">
+                <h2> <picture>
+  <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f91d/512.webp" type="image/webp">
+  <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f91d/512.gif" alt="🤝" width="32" height="32">
+</picture>Connect with Sports Mentors</h2>
+                <div class="mentor-grid">
+                    <div class="mentor-card">
+                        <div class="mentor-avatar">👨‍🏫</div>
+                        <h3>Rajesh Kumar</h3>
+                        <p><strong>Specialization:</strong> Cricket Coaching</p>
+                        <p><strong>Experience:</strong> 15+ years</p>
+                        <div class="rating">⭐⭐⭐⭐⭐ (4.9/5)</div>
+                        <p><strong>Athletes Trained:</strong> 200+</p>
+                        <p><strong>Achievements:</strong> Former Ranji player, Level 3 coach</p>
+                        <button class="btn">Connect</button>
+                    </div>
+
+                    <div class="mentor-card">
+                        <div class="mentor-avatar">👩‍🏫</div>
+                        <h3>Priya Sharma</h3>
+                        <p><strong>Specialization:</strong> Athletics & Running</p>
+                        <p><strong>Experience:</strong> 12+ years</p>
+                        <div class="rating">⭐⭐⭐⭐⭐ (4.8/5)</div>
+                        <p><strong>Athletes Trained:</strong> 150+</p>
+                        <p><strong>Achievements:</strong> Former national champion, SAI certified</p>
+                        <button class="btn">Connect</button>
+                    </div>
+
+                    <div class="mentor-card">
+                        <div class="mentor-avatar">👨‍🏫</div>
+                        <h3>Arjun Singh</h3>
+                        <p><strong>Specialization:</strong> Swimming</p>
+                        <p><strong>Experience:</strong> 10+ years</p>
+                        <div class="rating">⭐⭐⭐⭐⭐ (4.7/5)</div>
+                        <p><strong>Athletes Trained:</strong> 100+</p>
+                        <p><strong>Achievements:</strong> Olympics qualifier, Level 4 coach</p>
+                        <button class="btn">Connect</button>
+                    </div>
+
+                    <div class="mentor-card">
+                        <div class="mentor-avatar">👩‍🏫</div>
+                        <h3>Sneha Patel</h3>
+                        <p><strong>Specialization:</strong> Badminton</p>
+                        <p><strong>Experience:</strong> 8+ years</p>
+                        <div class="rating">⭐⭐⭐⭐⭐ (4.9/5)</div>
+                        <p><strong>Athletes Trained:</strong> 80+</p>
+                        <p><strong>Achievements:</strong> Commonwealth medalist, BWF certified</p>
+                        <button class="btn">Connect</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Tracker Tab -->
+            <div class="tab-content" id="tracker">
+                <h2> My Sports Progress</h2>
+                
+                <div class="streak-container">
+                    <div class="streak-display">
+                        <h3>Current Streak </h3>
+                        <div class="streak-number" id="streakCount">15 <picture>
+  <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.webp" type="image/webp">
+  <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f31f/512.gif" alt="🌟" width="32" height="32">
+</picture></div>
+                        <p>Days participating in sports activities</p>
+                    </div>
+                    
+                    <div class="points-display">
+                        <h3>Total Points: <span id="totalPoints">2,450</span></h3>
+                        <p>Earn points by participating in events and competitions!</p>
+                    </div>
+
+                    <div class="competition-grid">
+                        <div class="competition-card">
+                            <h3>🎯 Recent Participations</h3>
+                            <ul class="eligibility-list">
+                                <li>Local Marathon - 50 points</li>
+                                <li>District Swimming - 100 points</li>
+                                <li>Badminton Tournament - 75 points</li>
+                                <li>Cricket League - 150 points</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="competition-card">
+                            <h3>🏆 Achievements</h3>
+                            <ul class="eligibility-list">
+                                <li>🥉 Bronze - District Swimming</li>
+                                <li>🏅 Participant - State Cricket</li>
+                                <li>⭐ 15-Day Streak Achiever</li>
+                                <li>🎖️ Rising Star Award</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 2rem;">
+                        <button class="btn" onclick="recordActivity()">Record Today's Activity</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charity Tab -->
+            <div class="tab-content" id="charity">
+                <h2><picture>
+  <source srcset="https://fonts.gstatic.com/s/e/notoemoji/latest/1f49d/512.webp" type="image/webp">
+  <img src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f49d/512.gif" alt="💝" width="32" height="32">
+</picture> Support Underprivileged Athletes</h2>
+                
+                <div style="margin-bottom: 2rem;">
+                    <p style="font-size: 1.1rem; text-align: center; margin-bottom: 2rem;">
+                        Help talented athletes from economically weaker sections achieve their dreams by supporting their accommodation, travel, and training costs.
+                    </p>
+                </div>
+
+                <div class="donation-form">
+                    <h3>Make a Donation</h3>
+                    <form id="donationForm">
+                        <div class="form-group">
+                            <label for="donorType">I am a:</label>
+                            <select id="donorType" name="donorType">
+                                <option value="">Select donor type</option>
+                                <option value="individual">Individual</option>
+                                <option value="ngo">NGO</option>
+                                <option value="corporate">Corporate Sponsor</option>
+                                <option value="foundation">Foundation</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="donorName">Name/Organization:</label>
+                            <input type="text" id="donorName" name="donorName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="donationAmount">Donation Amount (₹):</label>
+                            <input type="number" id="donationAmount" name="donationAmount" min="100" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="donationPurpose">Purpose:</label>
+                            <select id="donationPurpose" name="donationPurpose">
+                                <option value="">Select purpose</option>
+                                <option value="accommodation">Accommodation Support</option>
+                                <option value="travel">Travel Expenses</option>
+                                <option value="equipment">Sports Equipment</option>
+                                <option value="training">Training Fees</option>
+                                <option value="general">General Support</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contactEmail">Contact Email:</label>
+                            <input type="email" id="contactEmail" name="contactEmail" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message (Optional):</label>
+                            <textarea id="message" name="message" rows="4" placeholder="Your message of support for the athletes..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem;">Donate Now</button>
+                    </form>
+                </div>
+
+                <div class="stats-grid" style="margin-top: 3rem;">
+                    <div class="stat-card">
+                        <div class="stat-number">₹50,00,000</div>
+                        <div>Total Funds Raised</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1,200</div>
+                        <div>Athletes Supported</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">500+</div>
+                        <div>Active Donors</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">95%</div>
+                        <div>Success Rate</div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 3rem; background: #f8f9fa; padding: 2rem; border-radius: 15px;">
+                    <h3>Recent Success Stories</h3>
+                    <div class="event-item">
+                        <div class="event-title">Ravi Kumar - Athletics</div>
+                        <p>With donor support, Ravi qualified for National Championships and secured a sports scholarship.</p>
+                        <div class="event-date">Supported by: Tech Mahindra Foundation</div>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-title">Priya Singh - Swimming</div>
+                        <p>Accommodation support helped Priya attend State level coaching camp and improve her timings.</p>
+                        <div class="event-date">Supported by: Individual donors</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Float Button -->
+    <button class="contact-float" onclick="openContactModal()">📞 Book a Call</button>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeContactModal()">&times;</span>
+            <h2>Book a Call</h2>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="contactName">Your Name:</label>
+                    <input type="text" id="contactName" name="contactName" required>
+                </div>
+                <div class="form-group">
+                    <label for="contactPhone">Phone Number:</label>
+                    <input type="tel" id="contactPhone" name="contactPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="callPurpose">Call Purpose:</label>
+                    <select id="callPurpose" name="callPurpose" required>
+                        <option value="">Select purpose</option>
+                        <option value="competition-info">Competition Information</option>
+                        <option value="mentor-connect">Connect with Mentor</option>
+                        <option value="donation-help">Donation Assistance</option>
+                        <option value="technical-support">Technical Support</option>
+                        <option value="general-query">General Query</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="preferredTime">Preferred Call Time:</label>
+                    <select id="preferredTime" name="preferredTime" required>
+                        <option value="">Select time</option>
+                        <option value="morning">Morning (9 AM - 12 PM)</option>
+                        <option value="afternoon">Afternoon (12 PM - 5 PM)</option>
+                        <option value="evening">Evening (5 PM - 8 PM)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Schedule Call</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Sports India Portal</h3>
+                    <p>Empowering athletes across India to achieve their sporting dreams through comprehensive competition information and support.</p>
+                    <p>📧 Email: info@sportsindiaportal.com</p>
+                    <p>📞 Phone: +91-98765-XXXXX</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <a href="#dashboard">Dashboard</a>
+                    <a href="#competitions">Competitions</a>
+                    <a href="#mentors">Sports Mentors</a>
+                    <a href="#charity">Support Athletes</a>
+                    <a href="#tracker">Progress Tracker</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Competition Levels</h3>
+                    <a href="#local">Local Sports</a>
+                    <a href="#district">District Level</a>
+                    <a href="#state">State Championships</a>
+                    <a href="#khelo-india">Khelo India</a>
+                    <a href="#national">National</a>
+                    <a href="#international">International</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <a href="#help">Help Center</a>
+                    <a href="#contact">Contact Us</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#guidelines">Competition Guidelines</a>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 TechKhel. All rights reserved. | 
+                   <a href="#privacy" style="color: #1e88e5;">Privacy Policy</a> | 
+                   <a href="#terms" style="color: #1e88e5;">Terms of Service</a> | 
+                   <a href="#reservation" style="color: #1e88e5;">Reservation Rights</a>
+                </p>
+                <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                    This portal complies with Government of India sports policies and reservation guidelines as per constitutional provisions.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked button and corresponding content
+                button.classList.add('active');
+                document.getElementById(button.dataset.tab).classList.add('active');
+            });
+        });
+
+        // Contact modal functions
+        function openContactModal() {
+            document.getElementById('contactModal').style.display = 'block';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('contactModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Progress tracker functionality
+        function recordActivity() {
+            const currentStreak = parseInt(document.getElementById('streakCount').textContent);
+            const currentPoints = parseInt(document.getElementById('totalPoints').textContent);
+            
+            // Simulate activity recording
+            const newPoints = currentPoints + 25; // Add 25 points for daily activity
+            const newStreak = currentStreak + 1;
+            
+            document.getElementById('streakCount').textContent = newStreak;
+            document.getElementById('totalPoints').textContent = newPoints;
+            
+            alert('Great job! Activity recorded. You earned 25 points and maintained your streak!');
+        }
+
+        // Form submissions
+        document.getElementById('donationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const donationAmount = formData.get('donationAmount');
+            const donorName = formData.get('donorName');
+            
+            // Simulate donation processing
+            alert(`Thank you ${donorName}! Your donation of ₹${donationAmount} will help support underprivileged athletes. You will receive a confirmation email shortly.`);
+            
+            // Reset form
+            this.reset();
+        });
+
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const contactName = formData.get('contactName');
+            const callPurpose = formData.get('callPurpose');
+            const preferredTime = formData.get('preferredTime');
+            
+            // Simulate call booking
+            alert(`Thank you ${contactName}! Your call has been scheduled. Our team will contact you during ${preferredTime.replace('-', ' ')} regarding ${callPurpose.replace('-', ' ')}.`);
+            
+            // Close modal and reset form
+            closeContactModal();
+            this.reset();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Competition registration buttons
+        document.querySelectorAll('.btn').forEach(btn => {
+            if (btn.textContent.includes('Register') || btn.textContent.includes('Apply')) {
+                btn.addEventListener('click', function() {
+                    const cardTitle = this.closest('.competition-card').querySelector('h3').textContent;
+                    alert(`Registration process initiated for ${cardTitle}. You will be redirected to the official registration portal.`);
+                });
+            }
+        });
+
+        // Mentor connect buttons
+        document.querySelectorAll('.mentor-card .btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const mentorName = this.closest('.mentor-card').querySelector('h3').textContent;
+                alert(`Connection request sent to ${mentorName}. They will contact you within 24 hours.`);
+            });
+        });
+
+        // Add some interactive animations
+        document.querySelectorAll('.competition-card, .mentor-card, .stat-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Loading animation for the page
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease-in';
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        });
+
+        // Add notification system for upcoming events
+        function checkUpcomingEvents() {
+            const today = new Date();
+            const eventDate = new Date('2024-03-15'); // Example upcoming event
+            const daysDiff = Math.ceil((eventDate - today) / (1000 * 60 * 60 * 24));
+            
+            if (daysDiff <= 7 && daysDiff > 0) {
+                setTimeout(() => {
+                    alert(`Reminder: Inter-District Basketball Championship is in ${daysDiff} days! Don't forget to register.`);
+                }, 2000);
+            }
+        }
+
+        // Call notification check after page loads
+        setTimeout(checkUpcomingEvents, 3000);
+    </script>
+</body>
+</html>
